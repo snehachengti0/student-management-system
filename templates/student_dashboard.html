@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}My Dashboard{% endblock %}
+{% block heading %}Welcome, {{ student.name }}{% endblock %}
+{% block subheading %}Your academic snapshot{% endblock %}
+
+{% block content %}
+<div class="stat-grid">
+    <div class="stat-card accent-1">
+        <p class="stat-label">Roll Number</p>
+        <h3 class="stat-value">{{ student.roll_no }}</h3>
+    </div>
+    <div class="stat-card accent-2">
+        <p class="stat-label">Course</p>
+        <h3 class="stat-value">{{ student.course or '—' }}</h3>
+    </div>
+    <div class="stat-card accent-3">
+        <p class="stat-label">Attendance %</p>
+        <h3 class="stat-value">{{ percent }}%</h3>
+    </div>
+    <div class="stat-card accent-4">
+        <p class="stat-label">Days Present</p>
+        <h3 class="stat-value">{{ present }} / {{ total }}</h3>
+    </div>
+</div>
+
+<div class="panel">
+    <div class="panel-head"><h3>Profile Details</h3></div>
+    <div class="profile-grid">
+        <div><span>Full Name</span><p>{{ student.name }}</p></div>
+        <div><span>Email</span><p>{{ student.email }}</p></div>
+        <div><span>Phone</span><p>{{ student.phone or '—' }}</p></div>
+        <div><span>Year of Study</span><p>{{ student.year_of_study or '—' }}</p></div>
+        <div class="full"><span>Address</span><p>{{ student.address or '—' }}</p></div>
+    </div>
+</div>
+{% endblock %}

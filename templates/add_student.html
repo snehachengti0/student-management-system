@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Add Student{% endblock %}
+{% block heading %}Add New Student{% endblock %}
+{% block subheading %}Fill in the details to create a student record{% endblock %}
+
+{% block content %}
+<div class="panel">
+    <form method="POST" class="form grid-2">
+        <label>Roll Number
+            <input type="text" name="roll_no" required>
+        </label>
+        <label>Full Name
+            <input type="text" name="name" required>
+        </label>
+        <label>Email
+            <input type="email" name="email" required>
+        </label>
+        <label>Phone
+            <input type="text" name="phone">
+        </label>
+        <label>Course
+            <input type="text" name="course" placeholder="e.g. B.Sc CS">
+        </label>
+        <label>Year of Study
+            <input type="number" name="year_of_study" min="1" max="6" value="1">
+        </label>
+        <label class="full">Address
+            <input type="text" name="address">
+        </label>
+        <label class="full">Temporary Password
+            <input type="password" name="password" required minlength="6">
+        </label>
+
+        <div class="full row-end">
+            <a class="btn ghost" href="{{ url_for('students_list') }}">Cancel</a>
+            <button class="btn primary" type="submit">Save Student</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

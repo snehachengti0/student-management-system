@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Mark Attendance{% endblock %}
+{% block heading %}Mark Attendance{% endblock %}
+{% block subheading %}Mark daily present/absent for all students{% endblock %}
+
+{% block content %}
+<form class="search-bar" method="GET" action="{{ url_for('attendance') }}">
+    <label style="display:flex;align-items:center;gap:.6rem;">
+        <span class="muted">Date:</span>
+        <input type="date" name="date" value="{{ today }}">
+    </label>
+    <button class="btn primary" type="submit">Load</button>
+</form>
+
+<form method="POST" class="panel">
+    <input type="hidden" name="date" value="{{ today }}">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Roll No</th><th>Name</th><th class="center">Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for s in students %}
+        {% set current = existing.get(s.id, 'Present') %}
+        <tr>
+            <td>{{ s.roll_no }}</td>
+            <td>{{ s.name }}</td>
+            <td class="center">
+                <div class="pp-toggle">
+                    <label>
+                        <input type="radio" name="status_{{ s.id }}"
+                               value="Present"
+                               {% if current == 'Present' %}checked{% endif %}>
+                        <span class="pp present">Present</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="status_{{ s.id }}"
+                               value="Absent"
+                               {% if current == 'Absent' %}checked{% endif %}>
+                        <span class="pp absent">Absent</span>
+                    </label>
+                </div>
+            </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="3" class="empty">No students to mark.</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% if students %}
+    <div class="row-end pad">
+        <button class="btn primary" type="submit">Save Attendance</button>
+    </div>
+    {% endif %}
+</form>
+{% endblock %}

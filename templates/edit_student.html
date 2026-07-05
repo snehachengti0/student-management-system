@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Edit Student{% endblock %}
+{% block heading %}Edit Student{% endblock %}
+{% block subheading %}Update {{ student.name }}'s details{% endblock %}
+
+{% block content %}
+<div class="panel">
+    <form method="POST" class="form grid-2">
+        <label>Roll Number
+            <input type="text" value="{{ student.roll_no }}" disabled>
+        </label>
+        <label>Full Name
+            <input type="text" name="name" value="{{ student.name }}" required>
+        </label>
+        <label>Email
+            <input type="email" name="email" value="{{ student.email }}" required>
+        </label>
+        <label>Phone
+            <input type="text" name="phone" value="{{ student.phone or '' }}">
+        </label>
+        <label>Course
+            <input type="text" name="course" value="{{ student.course or '' }}">
+        </label>
+        <label>Year of Study
+            <input type="number" name="year_of_study" min="1" max="6"
+                   value="{{ student.year_of_study or 1 }}">
+        </label>
+        <label class="full">Address
+            <input type="text" name="address" value="{{ student.address or '' }}">
+        </label>
+        <label class="full">New Password <span class="muted">(optional)</span>
+            <input type="password" name="password" minlength="6"
+                   placeholder="Leave blank to keep current password">
+        </label>
+
+        <div class="full row-end">
+            <a class="btn ghost" href="{{ url_for('students_list') }}">Cancel</a>
+            <button class="btn primary" type="submit">Update Student</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

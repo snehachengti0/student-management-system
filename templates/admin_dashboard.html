@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+{% block heading %}Dashboard{% endblock %}
+{% block subheading %}Overview of your institution — {{ today }}{% endblock %}
+
+{% block content %}
+<div class="stat-grid">
+    <div class="stat-card accent-1">
+        <p class="stat-label">Total Students</p>
+        <h3 class="stat-value">{{ total_students }}</h3>
+    </div>
+    <div class="stat-card accent-2">
+        <p class="stat-label">Present Today</p>
+        <h3 class="stat-value">{{ present_today }}</h3>
+    </div>
+    <div class="stat-card accent-3">
+        <p class="stat-label">Absent Today</p>
+        <h3 class="stat-value">{{ absent_today }}</h3>
+    </div>
+    <div class="stat-card accent-4">
+        <p class="stat-label">Quick Action</p>
+        <a class="btn primary sm" href="{{ url_for('attendance') }}">Mark Attendance</a>
+    </div>
+</div>
+
+<div class="panel">
+    <div class="panel-head">
+        <h3>Recently Added Students</h3>
+        <a class="btn ghost sm" href="{{ url_for('students_list') }}">View All</a>
+    </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Roll No</th><th>Name</th><th>Email</th><th>Course</th><th>Year</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for s in recent %}
+        <tr>
+            <td>{{ s.roll_no }}</td>
+            <td>{{ s.name }}</td>
+            <td>{{ s.email }}</td>
+            <td>{{ s.course or '-' }}</td>
+            <td>{{ s.year_of_study or '-' }}</td>
+        </tr>
+        {% else %}
+        <tr><td colspan="5" class="empty">No students yet. Add one to get started.</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

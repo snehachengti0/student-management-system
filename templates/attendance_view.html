@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Attendance Records{% endblock %}
+{% block heading %}Attendance Records{% endblock %}
+{% block subheading %}
+{% if session.role == 'admin' %}Pick a student to view their history
+{% else %}Your attendance history{% endif %}
+{% endblock %}
+
+{% block content %}
+{% if students is not none %}
+<form class="search-bar" method="GET" action="{{ url_for('attendance_view') }}">
+    <select name="student_id" required>
+        <option value="">-- Select a student --</option>
+        {% for s in students %}
+        <option value="{{ s.id }}" {% if selected == s.id %}selected{% endif %}>
+            {{ s.roll_no }} — {{ s.name }}
+        </option>
+        {% endfor %}
+    </select>
+    <button class="btn primary" type="submit">View</button>
+</form>
+{% endif %}
+
+<div class="panel">
+    <table class="table">
+        <thead>
+        <tr><th>Date</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+        {% for r in records %}
+        <tr>
+            <td>{{ r.attendance_date | fmtdate }}</td>
+            <td>
+                <span class="badge {% if r.status=='Present' %}badge-green{% else %}badge-red{% endif %}">
+                    {{ r.status }}
+                </span>
+            </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="2" class="empty">
+            {% if session.role == 'admin' and not selected %}
+                Select a student above to load records.
+            {% else %}
+                No attendance records yet.
+            {% endif %}
+        </td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
